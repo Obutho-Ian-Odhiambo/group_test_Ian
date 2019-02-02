@@ -9,23 +9,32 @@ import java.util.Scanner;
 /*
     Obutho Ian Odhiambo
  */
+import javax.swing.table.TableRowSorter;
+import java.util.Random;
+import java.util.Scanner;
+
+/*
+    Obutho Ian Odhiambo
+ */
 public class ToothpicksGame {
+
+
+    // this variable keeps track of the number of toothpicks in the game
+    public static int toothpick = 9;
+
+    // here i have variables that store the number of toothpicks in each group
+    public static int toothpick_stack_A = 3;
+    public static int toothpick_stack_B = 3;
+    public static int toothpick_stack_C = 3;
 
     public static void main(String[] args) throws InterruptedException {
 
-        // this variable keeps track of the number of toothpicks in the game
-        int toothpick = 9;
-
-        // here i have variables that store the number of toothpicks in each group
-        int toothpick_stack_A = 3;
-        int toothpick_stack_B = 3;
-        int toothpick_stack_C = 3;
 
         // my first user input gets the name of the first player
         Scanner player_one = new Scanner(System.in);
         System.out.println("Enter the name of player 1");
         String player_one_name = player_one.next();
-
+        
 
         // input for the name of the second player
         Scanner player_two_option = new Scanner(System.in);
@@ -34,177 +43,84 @@ public class ToothpicksGame {
 
         if (player_two_opt == 1) {
 
-            // input for the name of the second player
-            Scanner player_two = new Scanner(System.in);
-            System.out.println("Enter the name of player 2");
-            String player_two_name = player_two.next();
-
-            // here I display general information about the game
-            System.out.println(".............................");
-            System.out.println(".............................");
-            System.out.println("The game has 9 toothpicks in total");
-            System.out.println("Group A has 3");
-            System.out.println("Group B has 3");
-            System.out.println("Group C has 3");
-            System.out.println(".............................");
-            System.out.println(".............................");
-
-
-            // this while runs the game
-            while (true) {
-
-                // this if statement just makes sure my grammar is in check
-                if (toothpick == 1) {
-                    System.out.println("There Is " + toothpick + " toothpick Remaining");
-                } else {
-                    System.out.println("There Are " + toothpick + " toothpicks Remaining");
-                }
-
-
-                // The scanner below takes the name of a group the player wants
-                System.out.println("Player 1 enter the name of the group you want to pick a toothpick from i.e A, B or C");
-                Scanner toothpick_group = new Scanner(System.in);
-                String group_chosen = toothpick_group.next();
-
-                // the if statement checks if the input is valid to proceed with the game
-                // else the if statement will break out of the game
-                if (group_chosen.equals("A") || group_chosen.equals("B") || group_chosen.equals("C")) {
-                    System.out.println("You've chosen" + " " + group_chosen);
-                } else {
-                    break;
-                }
-
-                // here i take in the number of toothpicks the user wants but not in a specific group
-                System.out.println("Player 1 Enter the number of toothpicks you want");
-                Scanner toothpick_number = new Scanner(System.in);
-                int number_chosen = toothpick_number.nextInt();
-
-                // this if statement checks if the number is valid, if not it breaks out of the game
-                if (number_chosen > 3 || number_chosen < 1) {
-                    System.out.println("You Can Only Remove 3 toothpicks At A Time");
-                    break;
-                } else {
-
-                    // for valid input the number is deducted from the total toothpicks available
-                    toothpick -= number_chosen;
-
-                    // this if statement deducts the amount the user has chosen from the correct group
-                    if (group_chosen.equals("A") && toothpick_stack_A >= 1 ) {
-                        toothpick_stack_A -= number_chosen;
-                    } else if (group_chosen.equals("B") && toothpick_stack_B >= 1) {
-                        toothpick_stack_B -= number_chosen;
-                    } else if (group_chosen.equals("C") && toothpick_stack_B >= 1) {
-                        toothpick_stack_C -= number_chosen;
-                    }
-
-                    toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
-
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-                    System.out.println("The game has" + " " + toothpick + "toothpicks in total");
-                    System.out.println("Group A has" + " " + toothpick_stack_A);
-                    System.out.println("Group B has" + " " + toothpick_stack_B);
-                    System.out.println("Group C has" + " " + toothpick_stack_C);
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-
-                    // the second now can now make his/her move, I have the same syntax as that of player 1
-                    // I just used different variable names
-                    System.out.println("Player 2 enter the name of the group you want to pick a toothpick from i.e A, B or C");
-                    Scanner toothpick_group_2 = new Scanner(System.in);
-                    String group_chosen_2 = toothpick_group_2.next();
-
-                    if (group_chosen_2.equals("A") || group_chosen_2.equals("B") || group_chosen_2.equals("C")) {
-                        System.out.println("You've chosen" + " " + group_chosen_2);
-                    } else {
-                        break;
-                    }
-
-                    System.out.println("player 2 Enter the number of toothpicks you want");
-                    Scanner toothpick_number_2 = new Scanner(System.in);
-                    int number_chosen_2 = toothpick_number_2.nextInt();
-
-
-                    // at this point the number of toothpicks is almost done and the game is coming to an end
-                    // if player 1 picks the last toothpicks then player 2 has won and vice-versa
-                    if (number_chosen_2 == 1) {
-                        System.out.println("player 2 has picked " + number_chosen_2 + " toothpicks");
-                    } else {
-                        System.out.println("Player 2 has picked " + number_chosen_2 + " toothpicks");
-                    }
-                    if (toothpick - number_chosen_2 <= 0) {
-                        System.out.println("no toothpicks remaining, " + " " + player_one_name + " " + "has Won!!");
-                        break;
-                    }
-                    if (toothpick - number_chosen <= 0) {
-                        System.out.println("no toothpicks remaining," + " " + player_two_name + " " + " has won!!");
-                        break;
-                    }
-
-                    if (group_chosen_2.equals("A")) {
-                        toothpick_stack_A -= number_chosen_2;
-                    } else if (group_chosen_2.equals("B")) {
-                        toothpick_stack_B -= number_chosen_2;
-                    } else if (group_chosen_2.equals("C")) {
-                        toothpick_stack_C -= number_chosen_2;
-                    }
-
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-                    System.out.println("The game has" + " " + toothpick + "toothpicks in total");
-                    System.out.println("Group A has" + " " + toothpick_stack_A);
-                    System.out.println("Group B has" + " " + toothpick_stack_B);
-                    System.out.println("Group C has" + " " + toothpick_stack_C);
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-                    toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
-
-                }
-
-            }
-
+            playertwo();
+            
         } else if (player_two_opt == 2) {
 
-            // here I display general information about the game
-            System.out.println(".............................");
-            System.out.println(".............................");
-            System.out.println("The game has 9 toothpicks in total");
-            System.out.println("Group A has 3");
-            System.out.println("Group B has 3");
-            System.out.println("Group C has 3");
-            System.out.println(".............................");
-            System.out.println(".............................");
+            playcomputer();
 
-            Thread.sleep(1000);
+        }
+    }
+    
+    
+    
 
-            while (true) {
+    public static void playertwo(){
+        // input for the name of the second player
+        Scanner player_two = new Scanner(System.in);
+        System.out.println("Enter the name of player 2");
+        String player_two_name = player_two.next();
+
+        // here I display general information about the game
+        System.out.println(".............................");
+        System.out.println(".............................");
+        System.out.println("The game has 9 toothpicks in total");
+        System.out.println("Group A has 3");
+        System.out.println("Group B has 3");
+        System.out.println("Group C has 3");
+        System.out.println(".............................");
+        System.out.println(".............................");
 
 
-                Random r = new Random();
-                char group = (char) (r.nextInt(3) + 'A');
+        // this while runs the game
+        while (true) {
 
-                Random rand = new Random();
-                int computer_answer = rand.nextInt(3) + 1;
+            // this if statement just makes sure my grammar is in check
+            if (toothpick == 1) {
+                System.out.println("There Is " + toothpick + " toothpick Remaining");
+            } else {
+                System.out.println("There Are " + toothpick + " toothpicks Remaining");
+            }
 
 
-                System.out.println("Now is the computers turn to play");
-                System.out.println("The computer has chosen group " + " " + group);
-                System.out.println("The computer has chosen" + " " + computer_answer + " " + "toothpicks");
+            // The scanner below takes the name of a group the player wants
+            System.out.println("Player 1 enter the name of the group you want to pick a toothpick from i.e A, B or C");
+            Scanner toothpick_group = new Scanner(System.in);
+            String group_chosen = toothpick_group.next();
 
-                if (Character.toString(group).equals("A")) {
-                    toothpick_stack_A -= computer_answer;
+            // the if statement checks if the input is valid to proceed with the game
+            // else the if statement will break out of the game
+            if (group_chosen.equals("A") || group_chosen.equals("B") || group_chosen.equals("C")) {
+                System.out.println("You've chosen" + " " + group_chosen);
+            } else {
+                break;
+            }
 
-                } else if (Character.toString(group).equals("B")) {
-                    toothpick_stack_B -= computer_answer;
+            // here i take in the number of toothpicks the user wants but not in a specific group
+            System.out.println("Player 1 Enter the number of toothpicks you want");
+            Scanner toothpick_number = new Scanner(System.in);
+            int number_chosen = toothpick_number.nextInt();
 
-                } else if (Character.toString(group).equals("C")) {
-                    toothpick_stack_C -= computer_answer;
+            // this if statement checks if the number is valid, if not it breaks out of the game
+            if (number_chosen > 3 || number_chosen < 1) {
+                System.out.println("You Can Only Remove 3 toothpicks At A Time");
+                break;
+            } else {
 
+                // for valid input the number is deducted from the total toothpicks available
+                toothpick -= number_chosen;
+
+                // this if statement deducts the amount the user has chosen from the correct group
+                if (group_chosen.equals("A") && toothpick_stack_A >= 1 ) {
+                    toothpick_stack_A -= number_chosen;
+                } else if (group_chosen.equals("B") && toothpick_stack_B >= 1) {
+                    toothpick_stack_B -= number_chosen;
+                } else if (group_chosen.equals("C") && toothpick_stack_B >= 1) {
+                    toothpick_stack_C -= number_chosen;
                 }
 
                 toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
 
-                Thread.sleep(1000);
                 System.out.println(".............................");
                 System.out.println(".............................");
                 System.out.println("The game has" + " " + toothpick + "toothpicks in total");
@@ -214,64 +130,170 @@ public class ToothpicksGame {
                 System.out.println(".............................");
                 System.out.println(".............................");
 
-                System.out.println("Player 1 enter the name of the group you want to pick a toothpick from i.e A, B or C");
-                Scanner toothpick_group = new Scanner(System.in);
-                String group_chosen = toothpick_group.next();
+                // the second now can now make his/her move, I have the same syntax as that of player 1
+                // I just used different variable names
+                System.out.println("Player 2 enter the name of the group you want to pick a toothpick from i.e A, B or C");
+                Scanner toothpick_group_2 = new Scanner(System.in);
+                String group_chosen_2 = toothpick_group_2.next();
 
-                // the if statement checks if the input is valid to proceed with the game
-                // else the if statement will break out of the game
-                if (group_chosen.equals("A") || group_chosen.equals("B") || group_chosen.equals("C")) {
-                    System.out.println("You've chosen" + " " + group_chosen);
+                if (group_chosen_2.equals("A") || group_chosen_2.equals("B") || group_chosen_2.equals("C")) {
+                    System.out.println("You've chosen" + " " + group_chosen_2);
                 } else {
                     break;
                 }
 
-                // here i take in the number of toothpicks the user wants but not in a specific group
-                System.out.println("Player 1 Enter the number of toothpicks you want");
-                Scanner toothpick_number = new Scanner(System.in);
-                int number_chosen = toothpick_number.nextInt();
+                System.out.println("player 2 Enter the number of toothpicks you want");
+                Scanner toothpick_number_2 = new Scanner(System.in);
+                int number_chosen_2 = toothpick_number_2.nextInt();
 
-                // this if statement checks if the number is valid, if not it breaks out of the game
-                if (number_chosen > 3 || number_chosen < 1) {
-                    System.out.println("You Can Only Remove 3 toothpicks At A Time");
-                    break;
+
+                // at this point the number of toothpicks is almost done and the game is coming to an end
+                // if player 1 picks the last toothpicks then player 2 has won and vice-versa
+                if (number_chosen_2 == 1) {
+                    System.out.println("player 2 has picked " + number_chosen_2 + " toothpicks");
                 } else {
-
-
-                    // this if statement deducts the amount the user has chosen from the correct group
-                    if (group_chosen.equals("A")) {
-                        toothpick_stack_A -= number_chosen;
-                    } else if (group_chosen.equals("B")) {
-                        toothpick_stack_B -= number_chosen;
-                    } else if (group_chosen.equals("C")) {
-                        toothpick_stack_C -= number_chosen;
-                    }
-
-                    toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
-
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-                    System.out.println("The game has" + " " + toothpick + "toothpicks in total");
-                    System.out.println("Group A has" + " " + toothpick_stack_A);
-                    System.out.println("Group B has" + " " + toothpick_stack_B);
-                    System.out.println("Group C has" + " " + toothpick_stack_C);
-                    System.out.println(".............................");
-                    System.out.println(".............................");
-
-                    if (toothpick - computer_answer <= 0) {
-                        System.out.println("no toothpicks remaining, " + " " + player_one_name + " " + "has Won!!");
-                        break;
-                    }
-                    if (toothpick - number_chosen <= 0) {
-                        System.out.println("no toothpicks remaining," + " " + "computer" + " " + " has won!!");
-                        break;
-                    }
-
-
+                    System.out.println("Player 2 has picked " + number_chosen_2 + " toothpicks");
                 }
+                if (toothpick - number_chosen_2 <= 0) {
+                    System.out.println("no toothpicks remaining, " + " " + "player one" + " " + "has Won!!");
+                    break;
+                }
+                if (toothpick - number_chosen <= 0) {
+                    System.out.println("no toothpicks remaining," + " " + player_two_name + " " + " has won!!");
+                    break;
+                }
+
+                if (group_chosen_2.equals("A")) {
+                    toothpick_stack_A -= number_chosen_2;
+                } else if (group_chosen_2.equals("B")) {
+                    toothpick_stack_B -= number_chosen_2;
+                } else if (group_chosen_2.equals("C")) {
+                    toothpick_stack_C -= number_chosen_2;
+                }
+
+                System.out.println(".............................");
+                System.out.println(".............................");
+                System.out.println("The game has" + " " + toothpick + "toothpicks in total");
+                System.out.println("Group A has" + " " + toothpick_stack_A);
+                System.out.println("Group B has" + " " + toothpick_stack_B);
+                System.out.println("Group C has" + " " + toothpick_stack_C);
+                System.out.println(".............................");
+                System.out.println(".............................");
+                toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
 
             }
 
+        }
+    }
+    
+    public static void playcomputer() throws InterruptedException{
+        // here I display general information about the game
+        System.out.println(".............................");
+        System.out.println(".............................");
+        System.out.println("The game has 9 toothpicks in total");
+        System.out.println("Group A has 3");
+        System.out.println("Group B has 3");
+        System.out.println("Group C has 3");
+        System.out.println(".............................");
+        System.out.println(".............................");
+
+        Thread.sleep(1000);
+
+        while (true) {
+
+
+            Random r = new Random();
+            char group = (char) (r.nextInt(3) + 'A');
+
+            Random rand = new Random();
+            int computer_answer = rand.nextInt(3) + 1;
+
+
+            System.out.println("Now is the computers turn to play");
+            System.out.println("The computer has chosen group " + " " + group);
+            System.out.println("The computer has chosen" + " " + computer_answer + " " + "toothpicks");
+
+            if (Character.toString(group).equals("A") && toothpick_stack_A >= 1) {
+                toothpick_stack_A -= computer_answer;
+
+            } else if (Character.toString(group).equals("B") && toothpick_stack_B >= 1) {
+                toothpick_stack_B -= computer_answer;
+
+            } else if (Character.toString(group).equals("C") && toothpick_stack_C >= 1) {
+                toothpick_stack_C -= computer_answer;
+
+            }
+            else {
+                break;
+            }
+
+            toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
+
+            Thread.sleep(1000);
+            System.out.println(".............................");
+            System.out.println(".............................");
+            System.out.println("The game has" + " " + toothpick + "toothpicks in total");
+            System.out.println("Group A has" + " " + toothpick_stack_A);
+            System.out.println("Group B has" + " " + toothpick_stack_B);
+            System.out.println("Group C has" + " " + toothpick_stack_C);
+            System.out.println(".............................");
+            System.out.println(".............................");
+
+            System.out.println("Player 1 enter the name of the group you want to pick a toothpick from i.e A, B or C");
+            Scanner toothpick_group = new Scanner(System.in);
+            String group_chosen = toothpick_group.next();
+
+            // the if statement checks if the input is valid to proceed with the game
+            // else the if statement will break out of the game
+            if (group_chosen.equals("A") || group_chosen.equals("B") || group_chosen.equals("C")) {
+                System.out.println("You've chosen" + " " + group_chosen);
+            } else {
+                break;
+            }
+
+            // here i take in the number of toothpicks the user wants but not in a specific group
+            System.out.println("Player 1 Enter the number of toothpicks you want");
+            Scanner toothpick_number = new Scanner(System.in);
+            int number_chosen = toothpick_number.nextInt();
+
+            // this if statement checks if the number is valid, if not it breaks out of the game
+            if (number_chosen > 3 || number_chosen < 1) {
+                System.out.println("You Can Only Remove 3 toothpicks At A Time");
+                break;
+            } else {
+
+
+                // this if statement deducts the amount the user has chosen from the correct group
+                if (group_chosen.equals("A")) {
+                    toothpick_stack_A -= number_chosen;
+                } else if (group_chosen.equals("B")) {
+                    toothpick_stack_B -= number_chosen;
+                } else if (group_chosen.equals("C")) {
+                    toothpick_stack_C -= number_chosen;
+                }
+
+                toothpick = toothpick_stack_A + toothpick_stack_B + toothpick_stack_C;
+
+                System.out.println(".............................");
+                System.out.println(".............................");
+                System.out.println("The game has" + " " + toothpick + "toothpicks in total");
+                System.out.println("Group A has" + " " + toothpick_stack_A);
+                System.out.println("Group B has" + " " + toothpick_stack_B);
+                System.out.println("Group C has" + " " + toothpick_stack_C);
+                System.out.println(".............................");
+                System.out.println(".............................");
+
+                if (toothpick - computer_answer <= 0) {
+                    System.out.println("no toothpicks remaining, " + " " + "Player one" + " " + "has Won!!");
+                    break;
+                }
+                if (toothpick - number_chosen <= 0) {
+                    System.out.println("no toothpicks remaining," + " " + "computer" + " " + " has won!!");
+                    break;
+                }
+
+
+            }
 
         }
     }
